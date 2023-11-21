@@ -34,3 +34,24 @@ Invoke-RestMethod -Method 'Post' -Uri http://localhost:8080/predict -Body (@{"te
 ## Testing
 
 Please visit `ogbv-ml-rest/automated-testing/README.md` for more information about how to perform feature tests for Uli and more about the testing scripts that are currently available. 
+
+## Docker Compose code for browser plugin
+This is the docker compose container code snipper from the `docker-compose.yml` file from the `browser-extension`.
+```yaml
+  ogbv-ml-rest:
+    container_name: ogbv-ml-rest
+    build:
+      context: ../ogbv-ml-rest
+      dockerfile: Dockerfile
+    restart: always
+    volumes:
+      - "~/data/ogbv_plugin/assets:/app/assets"
+      - "~/data/ogbv_plugin/ml-cache:/root/.cache/huggingface/transformers"
+    ports:
+      - 8081:80
+    environment:
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_USERNAME: tattle
+      DB_PASSWORD: tattle_pw
+```
